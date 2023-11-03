@@ -19,3 +19,25 @@ class HttPConfig {
     }
   }
 }
+Future<void> postRequestWithBearerToken(String url, String token, Map<String, dynamic> body) async {
+  try {
+    final response = await http.post(
+      Uri.parse(url),
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer $token',
+      },
+      body: jsonEncode(body),
+    );
+
+    if (response.statusCode == 200) {
+      print('POST request successful');
+      print('Response: ${response.body}');
+    } else {
+      print('Failed to make the POST request. Status code: ${response.statusCode}');
+      print('Response: ${response.body}');
+    }
+  } catch (e) {
+    print('Error: $e');
+  }
+}
